@@ -1,0 +1,44 @@
+
+<html>
+  <head>
+    <title>Sound Identification Web App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="col-xs-12 header_div text-center">
+      <h2>Sound Controlled Animals</h2>
+      <p>Note: Will notify if there is any dogs/cats nearby</p>
+    </div>
+    <div class="main_div">
+      <center>
+        <button class="btn btn-success" onclick="StartClassification()">Start</button>
+          <h3 id="ResultsLabel">I can hear -</h3>
+          <br>
+          <h4 id="AccuracyLabel">Accuracy -</h4>
+          <br>
+          <img  id="DogsPNG" src="data:image/png;base64,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" width="300" height="300">
+          <img  id="CatsPNG" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCbbx5fIFTy-Rjo2b_ldZk4L_2ZDSGug-5RQ&usqp=CAU" width="300" height="300">
+      </center>
+      </div>
+      <div class="copy_right_footer">
+        Developed by - Ari
+        </div>
+<script src="main.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+ 
+
